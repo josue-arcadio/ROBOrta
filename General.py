@@ -125,10 +125,28 @@ class General(commands.Cog, name="general"):
   )
   @checks.not_blacklisted()
   async def img_pb(self, context: Context) -> None:
-  
+        
+    def ler_arq(caminho):
+      with open(caminho) as f:
+        leitor = csv.reader(f)
+        inicio = next(leitor)
+        num_linhas = sum(1 for linhas in leitor)
+        
+      with open(caminho) as f:
+        leitor = csv.reader(f)
+        num_aleat = random.randint(2, num_linhas - 1)
+        for i in range(num_aleat):
+          next(f)
+        for linha in leitor:
+          print(linha)
+          break
+        numero = linha[0]; link0 = linha[1]; link1 = linha[2]
+      
+      return numero, link0, link1
+    
     arquivo = "dados_outros/LINKS_perfe_blu.csv"
-
-    with open(arquivo) as f:
+    
+    '''with open(arquivo) as f:
       leitor = csv.reader(f)
       inicio = next(leitor)
       num_linhas = sum(1 for linhas in leitor)
@@ -141,12 +159,15 @@ class General(commands.Cog, name="general"):
       for linha in leitor:
         print(linha)
         break
-      numero = linha[0]; link0 = linha[1]; link1 = linha[2]
+      numero = linha[0]; link0 = linha[1]; link1 = linha[2]'''
+    
+    R = ler_arq(arquivo)
+    numero = R[0]
+    link0 = R[1]
+    link1 = R[2]
 
-    if link1 == "":
-      este = link0
-    else:
-      este = link1
+    if link1 == "": este = link0
+    else: este = link1
     
     embed = discord.Embed(title="", description="", color=0x6a7ae6)
     embed.set_image(url=este)
